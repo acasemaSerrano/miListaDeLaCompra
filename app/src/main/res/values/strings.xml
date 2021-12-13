@@ -1,0 +1,88 @@
+<resources>
+    <string name="app_name">Lista de la compra</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="KEY_BUNDLE_SHOPINGLISTNAME">shopingList</string>
+
+    <string name="error_initAuth">error al autentificarte</string>
+    <string name="error_EmailValidate">no tiene forma de email (Example@me.com)</string>
+    <string name="error_PasswordValidate">necesitas 8 caracteres un numero y una letra ninuscula</string>
+    <string name="error_UserNameValidate">3 caracteres mínimo</string>
+    <string name="error_CantDeleteIsLast">no se puede eliminar es el ultimo</string>
+    <string name="error_nameShopinListIsVoid">el nombre de la lista es ta vacio</string>
+
+    <string name="listOfListFragment">Mis Listas</string>
+    <string name="listCreationFragment">Nueva lista</string>
+    <string name="loginFragment">Acceder a tu cuenta</string>
+    <string name="SignInFragment">Registrarse</string>
+    <string name="aboutFragment">Acerca del la aplicación</string>
+    <string name="SettingsFragment">Configuración</string>
+    <string name="otherListsFragment">listas de otros</string>
+
+    <string name="buyFromShoppingListFragment">_listName_</string>
+    <string name="ListEditFragment">_ListName_</string>
+    <string name="PermissionManagerFragment">_ListName_</string>
+
+    <string name="fragmentlistcreation_listname">Nombre de la lista</string>
+    <string name="fragmentlistcreation_switchOniline">Lista Online</string>
+    <string name="itemscreationlist_name">Nombre del producto</string>
+    <string name="itemscreationlist_amount">Cantidad</string>
+    <string name="itemscreationlist_ibAddDelete">Este botón es para añadir item y borrar</string>
+    <string name="itemscreationlist_ibDelete">delete</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Email">Email</string>
+    <string name="password">contraseña</string>
+    <string name="btnLogin">Iniciar sesión</string>
+    <string name="btnSignIn">Registrase</string>
+    <string name="prefs_file_key">com.acasema.listadelacompra.PREFERENCE_FILE_KEY</string>
+
+    <string name="btn">Google</string>
+    <string name="error_initAuthGoogle">error al iniciar sesion con google</string>
+    <string name="ScanBarcode">Scan a barcode</string>
+    <string name="SignOff">Cerrar sesión</string>
+    <string name="userName">nombre de usuario</string>
+    <string name="nav_header_subsubtitle">un nombre</string>
+    <string name="preferens">preferencias</string>
+    <string name="about">acerca de</string>
+    <string name="opciones">Opciones</string>
+    <string name="autor">programador:</string>
+    <string name="yo">acasema</string>
+    <string name="github">mi github</string>
+    <string name="messages_header">cuenta</string>
+    <string name="name_title_Preference">nombre de usuario</string>
+    <string name="name_sumary_Preference">Si está vacío contara se usara el nombre de la cuesta de google</string>
+    <string name="btbuy">comprar</string>
+    <string name="adListAlerDialogMessage">Vas a comprar o editar la lista</string>
+    <string name="adListAlerDialogBuy">comprar</string>
+    <string name="adListAlerDialogEdit">editar</string>
+    <string name="listHistoryFragment">Historial _ListName_</string>
+    <string name="KEY_BUNDLE_LISTNAME">keyBundleListName</string>
+    <string name="history">"historial: "</string>
+    <string name="dateFormate">d/MM/uuuu</string>
+    <string name="adListAlerDialoghistory">historial</string>
+    <string name="add_element">add Element</string>
+    <string name="delete_element">delete element</string>
+    <string name="online">online</string>
+    <string name="offline">offline</string>
+    <string name="KEY_BUNDLE_ONLINE">ONLINE</string>
+    <string name="notBought">no esta comprado</string>
+    <string name="action_buy">comprar</string>
+    <string name="action_edit">editar</string>
+    <string name="action_history">historial</string>
+    <string name="action_readBarcode">añadir articulo por codigo de barra</string>
+    <string name="information">informatión</string>
+    <string name="emailEditing">" esta editando"</string>
+    <string name="action_permissionManager">manejo de permisos</string>
+    <string name="SearchMail">buscar correo</string>
+    <string name="Search">buscar</string>
+    <string name="Cancel">cancelar</string>
+    <string name="emailNotFound">email no encontrado</string>
+    <string name="action_save">guardar</string>
+    <string name="KEY_BUNDLE_PERMISSION">permission</string>
+
+</resources>

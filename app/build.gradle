@@ -1,0 +1,83 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+
+    // necesario para FireBase
+    id 'com.google.gms.google-services'
+
+    // FireBase Apply the Crashlytics Gradle plugin
+    //id 'com.google.firebase.crashlytics'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.acasema.listadelacompra"
+        minSdk 24
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.preference:preference-ktx:1.1.1'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.0'
+    testImplementation 'junit:junit:'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    def room_version = "2.3.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    //FireBase
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
+    //FireBase analytics
+    implementation 'com.google.firebase:firebase-analytics-ktx:20.0.0'
+    //FireBase Authentication
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
+    //FireBase Authentication Google
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+    //FireBase Firestore database
+    implementation 'com.google.firebase:firebase-firestore:24.0.0'
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    //implementation 'com.google.firebase:firebase-crashlytics-ktx'
+
+    //Zxing: used to read barcode and code qr https://github.com/journeyapps/zxing-android-embedded
+    //licencia: Con licencia de Apache License 2.0
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+
+}

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/listOfListFragment"
+        android:name="com.acasema.listadelacompra.ui.listoflist.ListOfListFragment"
+        android:label="@string/listOfListFragment" >
+        <action
+            android:id="@+id/action_listOfListFragment_to_listViewfragment"
+            app:destination="@id/listViewfragment" />
+        <action
+            android:id="@+id/action_listOfListFragment_to_listCreationFragment"
+            app:destination="@id/listCreationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/listCreationFragment"
+        android:name="com.acasema.listadelacompra.ui.listcreation.ListCreationFragment"
+        android:label="@string/listCreationFragment"
+        tools:layout="@layout/fragment_listcreation" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.acasema.listadelacompra.ui.login.LoginFragment"
+        android:label="@string/loginFragment"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_listOfListFragment"
+            app:destination="@id/listOfListFragment"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.acasema.listadelacompra.ui.signin.SignInFragment"
+        android:label="@string/SignInFragment"
+        tools:layout="@layout/fragment_signin">
+        <action
+            android:id="@+id/action_signInFragment_to_listOfListFragment"
+            app:destination="@id/listOfListFragment"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.acasema.listadelacompra.ui.about.AboutFragment"
+        android:label="@string/aboutFragment"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.acasema.listadelacompra.ui.settings.SettingsFragment"
+        android:label="@string/SettingsFragment"/>
+    <fragment
+        android:id="@+id/buyFromShoppingListFragment"
+        android:name="com.acasema.listadelacompra.ui.buyfromshoppinglist.BuyFromShoppingListFragment"
+        android:label="@string/buyFromShoppingListFragment"/>
+    <fragment
+        android:id="@+id/listHistoryFragment"
+        android:name="com.acasema.listadelacompra.ui.listhistory.ListHistoryFragment"
+        android:label="@string/listHistoryFragment"/>
+    <fragment
+        android:id="@+id/listViewfragment"
+        android:name="com.acasema.listadelacompra.ui.listview.ListViewFragment"
+        android:label="ListViewfragment">
+        <action
+            android:id="@+id/action_listViewfragment_to_buyFromShoppingListFragment"
+            app:destination="@id/buyFromShoppingListFragment" />
+        <action
+            android:id="@+id/action_listViewfragment_to_listHistoryFragment"
+            app:destination="@id/listHistoryFragment" />
+        <action
+            android:id="@+id/action_listViewfragment_to_listCreationFragment"
+            app:destination="@id/listCreationFragment" />
+        <action
+            android:id="@+id/action_listViewfragment_to_permissionManagerFragment"
+            app:destination="@id/permissionManagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/permissionManagerFragment"
+        android:name="com.acasema.listadelacompra.ui.permissionmanager.PermissionManagerFragment"
+        android:label="@string/PermissionManagerFragment" />
+    <fragment
+        android:id="@+id/otherListsFragment"
+        android:name="com.acasema.listadelacompra.ui.otherlists.OtherListsFragment"
+        android:label="@string/otherListsFragment" >
+        <action
+            android:id="@+id/action_otherListsFragment_to_otherShopingListFragment"
+            app:destination="@id/otherShopingListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/otherShopingListFragment"
+        android:name="com.acasema.listadelacompra.ui.otherspinglist.OtherShopingListFragment"
+        android:label="OtherShopingListFragment" />
+
+</navigation>

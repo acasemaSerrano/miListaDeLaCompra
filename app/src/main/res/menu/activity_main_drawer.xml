@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/listOfListFragment"
+            android:title="@string/listOfListFragment" />
+
+        <item
+            android:id="@+id/otherListsFragment"
+            android:title="@string/otherListsFragment" />
+
+    </group>
+
+    <item android:title="@string/opciones">
+        <menu>
+            <item
+                android:id="@+id/settingsFragment"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="@string/preferens" />
+            <item
+                android:id="@+id/aboutFragment"
+                android:icon="@android:drawable/sym_action_email"
+                android:title="@string/about" />
+            <item
+                android:id="@+id/itSignOff"
+                android:icon="@android:drawable/ic_menu_close_clear_cancel"
+                android:title="@string/SignOff" />
+        </menu>
+    </item>
+</menu>
