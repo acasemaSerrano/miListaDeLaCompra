@@ -1,11 +1,11 @@
 package com.acasema.listadelacompra.data.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.acasema.listadelacompra.data.model.ShopingList
-
+/**
+ * autor: acasema (alfonso)
+ * clase para acceder a los elementos de la tabla ShopingLis
+ */
 @Dao
 interface ShopingListDao {
 
@@ -14,4 +14,11 @@ interface ShopingListDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(shopingList: ShopingList)
+
+    @Query("SELECT COUNT(*) FROM shopinglist WHERE name = :name")
+    fun getCount(name: String): Int
+
+    @Delete()
+    fun delete(shopingList: ShopingList)
+
 }

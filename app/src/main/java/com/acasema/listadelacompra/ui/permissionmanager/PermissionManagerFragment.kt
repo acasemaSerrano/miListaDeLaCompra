@@ -1,26 +1,29 @@
 package com.acasema.listadelacompra.ui.permissionmanager
 
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.EditText
 import android.widget.Toast
 
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.marginStart
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.acasema.listadelacompra.R
-import com.acasema.listadelacompra.adapter.AdapterPermissionManager
+import com.acasema.listadelacompra.ui.adapter.AdapterPermissionManager
+import com.acasema.listadelacompra.data.model.Permissions
 import com.acasema.listadelacompra.databinding.FragmentRecyclerviewBasicBinding
 import com.acasema.listadelacompra.ui.controller.ActionBarController
 import com.acasema.listadelacompra.ui.controller.FabController
 import com.acasema.listadelacompra.ui.main.MainActivity
 
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de fragment: para gestionar los permisos
+ */
 class PermissionManagerFragment : Fragment() {
 
     lateinit var adapter: AdapterPermissionManager
@@ -42,6 +45,7 @@ class PermissionManagerFragment : Fragment() {
         fab.setOnClickListener {
             newEmail()
         }
+        checklist(adapter.getList().size)
 
         val actionBar: ActionBarController = (activity as MainActivity).actionBarController
         actionBar.setTitle(listName)
@@ -67,23 +71,38 @@ class PermissionManagerFragment : Fragment() {
 
         listName = arguments?.getString(getString(R.string.KEY_BUNDLE_LISTNAME))!!
 
+        initAdapter()
+        setObserves()
+
+        viewModel.getListPermissions(listName)
+
+    }
+
+    private fun initAdapter() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.layoutManager = layoutManager
 
         adapter = AdapterPermissionManager(requireContext())
         binding.recyclerView.adapter = adapter
+    }
 
-
-        viewModel.getListLiveData().observe(viewLifecycleOwner, {adapter.setList(it)})
-        viewModel.getEmail().observe(viewLifecycleOwner, {
-            if (it != null)
-                adapter.addList(it, viewModel.getOwner(), listName)
-            else
-                Toast.makeText(requireContext(), getString(R.string.emailNotFound), Toast.LENGTH_LONG).show()
+    private fun setObserves() {
+        viewModel.getListLiveData().observe(viewLifecycleOwner, {
+            adapter.setList(it)
         })
+        viewModel.getEmail().observe(viewLifecycleOwner, {
+            if (it != null) {
+                val permissions = Permissions(it, viewModel.getOwner(), Permissions.PermissionsType.observer, listName)
+                adapter.addList(permissions)
+                checklist(adapter.getList().size)
 
-        viewModel.getListPermissions(listName)
-
+            }else
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.emailNotFound),
+                    Toast.LENGTH_LONG
+                ).show()
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -91,10 +110,19 @@ class PermissionManagerFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
 
     }
+
+    fun checklist(size: Int){
+        if(size == 0)
+            binding.ivNotData.visibility = View.VISIBLE
+        else
+            binding.ivNotData.visibility = View.GONE
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_save -> {
                 viewModel.updateList(listName, adapter.getList())
+                viewModel.usersDelete(listName, adapter.getUsersDelete())
                 requireView().findNavController().popBackStack()
                 true
             }
@@ -112,7 +140,7 @@ class PermissionManagerFragment : Fragment() {
             AlertDialog.Builder(requireContext())
             .setMessage(getString(R.string.SearchMail))
             .setView(input)
-            .setPositiveButton(R.string.Search) { _, _ -> viewModel.searchEmail(input.text.toString()) }
+            .setPositiveButton(R.string.Search) { _, _ -> viewModel.searchEmail(input.text.toString().trimEnd()) }
             .setNegativeButton(R.string.Cancel) { _, _ ->  }
             .create().show()
 

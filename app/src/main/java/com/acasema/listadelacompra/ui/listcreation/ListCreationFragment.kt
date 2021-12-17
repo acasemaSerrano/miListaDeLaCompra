@@ -1,10 +1,13 @@
 package com.acasema.listadelacompra.ui.listcreation
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,12 +15,13 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.acasema.listadelacompra.R
-import com.acasema.listadelacompra.adapter.AdapterListCreation
+import com.acasema.listadelacompra.ui.adapter.AdapterListCreation
 import com.acasema.listadelacompra.data.model.ShopingList
 import com.acasema.listadelacompra.databinding.FragmentListcreationBinding
 import com.acasema.listadelacompra.ui.controller.ActionBarController
 import com.acasema.listadelacompra.ui.main.MainActivity
 import com.acasema.listadelacompra.ui.controller.FabController
+import com.acasema.listadelacompra.utils.Pattern
 
 import com.google.android.material.snackbar.Snackbar
 
@@ -58,6 +62,10 @@ class ListCreationFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.fragment_menu_listcreation, menu)
+        if (arguments?.getString(getString(R.string.KEY_BUNDLE_LISTNAME)) != null){
+            inflater.inflate(R.menu.fragment_menu_listcreation_edit, menu)
+        }
+
         super.onCreateOptionsMenu(menu, inflater)
 
     }
@@ -74,31 +82,50 @@ class ListCreationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val shopingListName = arguments?.getString(getString(R.string.KEY_BUNDLE_LISTNAME))
+
+        initAdapter()
+        viewModelObserver()
+
+        if (shopingListName != null){
+            initEdit(shopingListName)
+        }else {
+            initCreation()
+        }
+
+        setListener()
+    }
+
+    private fun initCreation() {
+        adapter.setGoneSwBought()
+        adapter.setShopingListName("")
+        adapter.addNewElement()
+    }
+
+    private fun initEdit(shopingListName: String) {
+        binding.switchOniline.isEnabled = false
+        binding.switchOniline.isChecked =
+            arguments?.getBoolean(getString(R.string.KEY_BUNDLE_ONLINE))!!
+
+        viewModel.getElementList(shopingListName, binding.switchOniline.isChecked)
+        binding.tieListName.text = Editable.Factory().newEditable(shopingListName)
+        binding.tieListName.isEnabled = false
+        viewModel.shopingListNamePost(shopingListName)
+    }
+
+    private fun initAdapter() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.layoutManager = layoutManager
 
         adapter = AdapterListCreation(requireContext())
         binding.recyclerView.adapter = adapter
+    }
 
-        viewModelObserver()
 
-
-        val shopingListName = arguments?.getString(getString(R.string.KEY_BUNDLE_LISTNAME))
-        if (shopingListName != null){
-            binding.switchOniline.isEnabled = false
-            binding.switchOniline.isChecked = arguments?.getBoolean(getString(R.string.KEY_BUNDLE_ONLINE))!!
-
-            viewModel.getElementList(shopingListName, binding.switchOniline.isChecked)
-
-            binding.tieListName.text = Editable.Factory().newEditable(shopingListName)
-            binding.tieListName.isEnabled = false
-            viewModel.shopingListNamePost(shopingListName)
-        }else {
-            adapter.setShopingListName("")
-            adapter.addNewElement()
-        }
-
-        setListener()
+    override fun onStop() {
+        super.onStop()
+        val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
     override fun onDestroyView() {
@@ -113,6 +140,11 @@ class ListCreationFragment : Fragment() {
                 initScanner()
                 true
             }
+            R.id.action_delete -> {
+                isDelete()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -153,16 +185,42 @@ class ListCreationFragment : Fragment() {
     private fun salveData() {
         val nameShopingList = viewModel.getShopingListNameLiveData().value
 
-        if(nameShopingList != null && nameShopingList != "") {
+        if(Pattern.isText25MaxValid(nameShopingList!!)) {
 
             val shopingList = ShopingList(viewModel.getShopingListNameLiveData().value!!)
             shopingList.online = binding.switchOniline.isChecked
-            viewModel.uploadData(shopingList, adapter.getList())
-            requireView().findNavController().popBackStack()
+
+            if (binding.switchOniline.isEnabled){
+                viewModel.uploadData(shopingList, adapter.getList())
+            } else{
+                viewModel.updateData(shopingList, adapter.getList())
+            }
 
         }else{
-            Snackbar.make(requireView(), getText(R.string.error_nameShopinListIsVoid), Snackbar.LENGTH_LONG).show()
+            if (nameShopingList == ""){
+                binding.tieListName.error = getText(R.string.error_nameShopinListIsVoid)
+            }else{
+                binding.tieListName.error = getText(R.string.error_nameShopinListMaxReached)
+            }
         }
+    }
+
+    private fun isDelete() {
+
+        val shopingList = ShopingList(viewModel.getShopingListNameLiveData().value!!)
+        shopingList.online = binding.switchOniline.isChecked
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.adDeleteTitle)
+            .setMessage(getString(R.string.adDeleteMessage))
+            .setPositiveButton(R.string.adDeleteAccept) { _, _ ->
+                viewModel.delete(shopingList, adapter.getList())
+                requireView().findNavController().popBackStack()
+                requireView().findNavController().popBackStack()
+            }
+            .setNegativeButton(R.string.adDeleteCancel) { _, _ ->  }
+            .create().show()
+
     }
 
     /**
@@ -205,6 +263,13 @@ class ListCreationFragment : Fragment() {
                 ).show()
             else {
                 adapter.addElement(it)
+            }
+        })
+        viewModel.getResultSalveDataLiveData().observe(viewLifecycleOwner, {
+            if(it){
+                requireView().findNavController().popBackStack()
+            }else {
+                binding.tieListName.error = getString(R.string.error_shopinglistname_is_exists)
             }
         })
     }

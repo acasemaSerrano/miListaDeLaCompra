@@ -9,7 +9,11 @@ import com.acasema.listadelacompra.data.dao.ShopingListDao
 import com.acasema.listadelacompra.data.model.Element
 import com.acasema.listadelacompra.data.model.ShopingList
 
-@Database(entities = [ShopingList::class, Element::class], version = 2, exportSchema = false)
+/**
+ * autor: acasema (alfonso)
+ *  clase creadora de la base de datos de room
+ */
+@Database(entities = [ShopingList::class, Element::class], version = 3, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun ShopingListDao(): ShopingListDao

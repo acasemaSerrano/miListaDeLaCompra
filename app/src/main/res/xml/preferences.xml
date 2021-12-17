@@ -5,10 +5,8 @@
 
         <EditTextPreference
             android:dialogTitle="@string/name_title_Preference"
-            android:key="name"
-            android:summary="@string/name_sumary_Preference"
-            android:title="@string/name_title_Preference"
-            app:useSimpleSummaryProvider="true" />
+            android:key="Username"
+            android:title="@string/name_title_Preference" />
     </PreferenceCategory>
 
 </PreferenceScreen>

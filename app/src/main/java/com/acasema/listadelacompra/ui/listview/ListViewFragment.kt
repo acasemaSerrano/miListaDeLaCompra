@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.acasema.listadelacompra.R
-import com.acasema.listadelacompra.adapter.AdapterListView
+import com.acasema.listadelacompra.ui.adapter.AdapterListView
 import com.acasema.listadelacompra.databinding.FragmentRecyclerviewBasicBinding
 import com.acasema.listadelacompra.ui.controller.ActionBarController
 import com.acasema.listadelacompra.ui.controller.FabController
@@ -15,7 +15,10 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 
-
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de fragment: muestra la lista
+ */
 class ListViewFragment : Fragment() {
 
     lateinit var adapter: AdapterListView
@@ -60,20 +63,36 @@ class ListViewFragment : Fragment() {
         viewModel.isOnline = arguments?.getBoolean(getString(R.string.KEY_BUNDLE_ONLINE))!!
         viewModel.retarIsEditing(listName)
 
+        initAdapter()
+        setObserves()
+
+        viewModel.updateList(listName)
+
+    }
+
+    private fun initAdapter() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.layoutManager = layoutManager
 
         adapter = AdapterListView(requireContext())
         binding.recyclerView.adapter = adapter
+    }
 
-
-        viewModel.getListLiveData().observe(viewLifecycleOwner, {adapter.setList(it)})
-        viewModel.getEmailEditingLiveData().observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), it + getString(R.string.emailEditing), Toast.LENGTH_LONG).show()
+    private fun setObserves() {
+        viewModel.getListLiveData().observe(viewLifecycleOwner, {
+            if(it.size == 0)
+                binding.ivNotData.visibility = View.VISIBLE
+            else
+                binding.ivNotData.visibility = View.GONE
+            adapter.setList(it)
         })
-
-        viewModel.updateList(listName)
-
+        viewModel.getEmailEditingLiveData().observe(viewLifecycleOwner, {
+            Toast.makeText(
+                requireContext(),
+                it + getString(R.string.emailEditing),
+                Toast.LENGTH_LONG
+            ).show()
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

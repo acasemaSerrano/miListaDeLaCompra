@@ -2,7 +2,10 @@ package com.acasema.listadelacompra.utils
 
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-
+/**
+ * autor: acasema (alfonso)
+ *  clase que almacena todos los patrones usados
+ */
 class Pattern {
     companion object{
         /**
@@ -54,6 +57,18 @@ class Pattern {
          */
         fun isText3oMasValid(text: String): Boolean {
             val patron = "^.{3,}$"
+            return isStringValid(text, patron)
+        }
+
+        /**
+         * método estático qe se el String cumple lo siguiente
+         * -cualquier texto
+         * -un maxsimo de 25 caracteres
+         * @param text titulo a comprobar
+         * @return respuesta de la comprobación
+         */
+        fun isText25MaxValid(text: String): Boolean {
+            val patron = "^.{1,25}$"
             return isStringValid(text, patron)
         }
 

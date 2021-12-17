@@ -96,6 +96,28 @@
     <fragment
         android:id="@+id/otherShopingListFragment"
         android:name="com.acasema.listadelacompra.ui.otherspinglist.OtherShopingListFragment"
-        android:label="OtherShopingListFragment" />
+        android:label="OtherShopingListFragment" >
+        <action
+            android:id="@+id/action_otherShopingListFragment_to_otherBuyShoppingListFragment"
+            app:destination="@id/otherBuyShoppingListFragment" />
+        <action
+            android:id="@+id/action_otherShopingListFragment_to_otherEditShopingListFragment"
+            app:destination="@id/otherEditShopingListFragment" />
+        <action
+            android:id="@+id/action_otherShopingListFragment_to_otherHistoryShopingFragment"
+            app:destination="@id/otherHistoryShopingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/otherBuyShoppingListFragment"
+        android:name="com.acasema.listadelacompra.ui.otherbutshoppinglist.OtherBuyShoppingListFragment"
+        android:label="OtherBuyShoppingListFragment" />
+    <fragment
+        android:id="@+id/otherEditShopingListFragment"
+        android:name="com.acasema.listadelacompra.ui.othereditshopinglist.OtherEditShopingListFragment"
+        android:label="OtherEditShopingListFragment" />
+    <fragment
+        android:id="@+id/otherHistoryShopingFragment"
+        android:name="com.acasema.listadelacompra.ui.otherhistoryshopingList.OtherHistoryShopingFragment"
+        android:label="OtherHistoryShopingFragment" />
 
 </navigation>

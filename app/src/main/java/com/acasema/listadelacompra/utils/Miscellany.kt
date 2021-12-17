@@ -1,25 +1,22 @@
 package com.acasema.listadelacompra.utils
 
-import java.io.IOException
-import java.lang.RuntimeException
-import java.net.MalformedURLException
-import java.net.URL
-import java.net.URLConnection
+import java.lang.Exception
 
+/**
+ * autor: acasema (alfonso)
+ *  clase que almacena toda función comun
+ */
 class Miscellany {
     companion object{
-        fun netIsAvailable(): Boolean {
-            return try {
-                val url = URL("http://www.google.com")
-                val conn: URLConnection = url.openConnection()
-                conn.connect()
-                conn.getInputStream().close()
-                true
-            } catch (e: MalformedURLException) {
-                throw RuntimeException(e)
-            } catch (e: IOException) {
-                false
+
+        fun isOnlineNet(): Boolean {
+            try {
+                val p: Process = Runtime.getRuntime().exec("ping -c 1 www.google.es")
+                return (p.waitFor() == 0)
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
+            return false
         }
     }
 }

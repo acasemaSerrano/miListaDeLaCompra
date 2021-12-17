@@ -6,6 +6,10 @@ import com.acasema.listadelacompra.data.model.Permissions
 
 import com.acasema.listadelacompra.service.FirebaseFirestoreService
 
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de ViewModel.
+ */
 class OtherListsViewModel: ViewModel() {
 
     private val permissionsListLiveData: MutableLiveData<List<Permissions>> = MutableLiveData()

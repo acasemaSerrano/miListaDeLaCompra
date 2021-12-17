@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 
 import com.google.android.material.navigation.NavigationView
@@ -24,8 +26,15 @@ import com.acasema.listadelacompra.service.FirebaseFirestoreService
 import com.acasema.listadelacompra.ui.controller.ActionBarController
 import com.acasema.listadelacompra.ui.controller.FabController
 import com.acasema.listadelacompra.ui.controller.NavHeaderController
+import com.acasema.listadelacompra.utils.Miscellany
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.RuntimeException
 
-
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de AppCompatActivity: es la base de la aplicación
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
@@ -37,6 +46,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        lifecycleScope.launch {
+            if (!Miscellany.isOnlineNet()){
+                showErrorNotNotAvailable()
+            }
+        }
 
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
@@ -130,13 +144,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun showErrorNotNotAvailable() {
+        AlertDialog.Builder(this)
+            .setMessage(getString(R.string.error_net_not_Available))
+            .setOnDismissListener { finish() }
+            .create().show()
+    }
+
     var actionBarController = object : ActionBarController {
         override fun disable() {
             supportActionBar!!.setDisplayHomeAsUpEnabled(false)
             supportActionBar!!.setHomeButtonEnabled(false)
             binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         }
-
         override fun setTitle(title: String) {
             supportActionBar!!.title = title
         }
@@ -144,9 +164,10 @@ class MainActivity : AppCompatActivity() {
 
     var navHeaderController = object : NavHeaderController{
         override fun init() {
-            mainViewModel.navHeaderInit(resources)
+            if (Miscellany.isOnlineNet()){
+                mainViewModel.navHeaderInit(resources)
+            }
         }
-
     }
     //endregion
 

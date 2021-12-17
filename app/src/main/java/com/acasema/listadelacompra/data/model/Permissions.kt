@@ -2,7 +2,10 @@ package com.acasema.listadelacompra.data.model
 
 import java.io.Serializable
 
-
+/**
+ * autor: acasema (alfonso)
+ * clase model de Permissions
+ */
 data class Permissions(val tosomeone: String, val owner: String, var permissions: PermissionsType, val shopingList: String): Serializable {
 
 

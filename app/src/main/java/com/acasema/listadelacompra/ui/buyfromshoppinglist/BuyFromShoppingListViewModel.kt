@@ -2,12 +2,18 @@ package com.acasema.listadelacompra.ui.buyfromshoppinglist
 
 import androidx.lifecycle.*
 import com.acasema.listadelacompra.data.model.Element
+import com.acasema.listadelacompra.data.model.Permissions
 import com.acasema.listadelacompra.data.model.ShopingList
 import com.acasema.listadelacompra.data.repository.RepositoryElement
 import com.acasema.listadelacompra.service.FirebaseFirestoreService
+import com.acasema.listadelacompra.ui.contract.BuyViewModelContract
 import kotlinx.coroutines.launch
 
-class BuyFromShoppingListViewModel : ViewModel() {
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de ViewModel.
+ */
+class BuyFromShoppingListViewModel : ViewModel(), BuyViewModelContract {
 
 
     private val listLiveData: MutableLiveData<List<Element>> = MutableLiveData()
@@ -39,7 +45,7 @@ class BuyFromShoppingListViewModel : ViewModel() {
         }
     }
 
-    fun setBought(element: Element){
+    override fun setBought(element: Element){
         if (!isOnline){
             //se usa add por que puede rescribir
             viewModelScope.launch {
@@ -55,6 +61,10 @@ class BuyFromShoppingListViewModel : ViewModel() {
 
             FirebaseFirestoreService().setData(ShopingList(element.shopingListName), data)
         }
+    }
+
+    fun cancel(listName: String){
+        FirebaseFirestoreService().setEditingData(listName, true)
     }
 
 }

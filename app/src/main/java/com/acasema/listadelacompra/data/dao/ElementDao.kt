@@ -1,11 +1,12 @@
 package com.acasema.listadelacompra.data.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.acasema.listadelacompra.data.model.Element
 
+/**
+ * autor: acasema (alfonso)
+ * clase para acceder a los elementos de la tabla Element
+ */
 @Dao
 interface ElementDao {
 
@@ -20,5 +21,8 @@ interface ElementDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(elements: List<Element>)
+
+    @Delete
+    fun delete(elements: List<Element>)
 
 }

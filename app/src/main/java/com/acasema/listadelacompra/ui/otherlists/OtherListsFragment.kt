@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 
-import com.acasema.listadelacompra.adapter.AdapterOtherList
+import com.acasema.listadelacompra.ui.adapter.AdapterOtherList
 import com.acasema.listadelacompra.databinding.FragmentRecyclerviewBasicBinding
 import com.acasema.listadelacompra.ui.controller.FabController
-import com.acasema.listadelacompra.ui.controller.NavHeaderController
 import com.acasema.listadelacompra.ui.main.MainActivity
-
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de fragment: para ver la colección de las listas que tienes permiso
+ */
 class OtherListsFragment: Fragment() {
 
     lateinit var adapter: AdapterOtherList
@@ -42,15 +44,28 @@ class OtherListsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initAdapter()
+        setObserves()
+
+        ViewModel.updateList()
+    }
+
+    private fun initAdapter() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.layoutManager = layoutManager
 
         adapter = AdapterOtherList(requireContext())
         binding.recyclerView.adapter = adapter
+    }
 
-        ViewModel.getListLiveData().observe(viewLifecycleOwner, {adapter.setList(it)})
-
-        ViewModel.updateList()
+    private fun setObserves() {
+        ViewModel.getListLiveData().observe(viewLifecycleOwner, {
+            if(it.size == 0)
+                binding.ivNotData.visibility = View.VISIBLE
+            else
+                binding.ivNotData.visibility = View.GONE
+            adapter.setList(it)
+        })
     }
 
     override fun onDestroyView() {

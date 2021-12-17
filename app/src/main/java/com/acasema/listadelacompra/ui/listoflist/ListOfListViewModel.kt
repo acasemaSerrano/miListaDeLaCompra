@@ -8,6 +8,10 @@ import com.acasema.listadelacompra.data.repository.RepositoyShopingList
 import com.acasema.listadelacompra.service.FirebaseFirestoreService
 import kotlinx.coroutines.launch
 
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de ViewModel.
+ */
 class ListOfListViewModel : ViewModel() {
 
     private val listLiveData: MutableLiveData<List<ShopingList>> = MutableLiveData()

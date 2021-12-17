@@ -14,6 +14,10 @@ import com.acasema.listadelacompra.ui.main.MainActivity
 import com.acasema.listadelacompra.ui.controller.FabController
 import com.acasema.listadelacompra.utils.Pattern
 
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de fragment: sirve para registrarse
+ */
 class SignInFragment: Fragment() {
     private lateinit var signInViewModel: SignInViewModel
     private var _binding: FragmentSigninBinding? = null

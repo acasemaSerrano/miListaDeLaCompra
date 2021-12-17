@@ -7,6 +7,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
+/**
+ * autor: acasema (alfonso)
+ *  clase que almacena toda la iteración con la clase FirebaseAuth
+ */
 class FirebaseAuthService {
 
     private val auth = FirebaseAuth.getInstance()
@@ -19,7 +23,6 @@ class FirebaseAuthService {
     }
 
     fun loginGoogle(account: GoogleSignInAccount): Task<AuthResult> {
-
         val credential= GoogleAuthProvider.getCredential(account.idToken, null)
         return auth.signInWithCredential(credential)
     }

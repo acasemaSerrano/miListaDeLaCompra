@@ -12,22 +12,26 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="chorizo"
         android:textSize="24sp"
+        android:singleLine="false"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvAmount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tvAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="16dp"
         android:text="cantidad: 10"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/tvName"
-        app:layout_constraintStart_toEndOf="@+id/tvName"
+        app:layout_constraintEnd_toStartOf="@+id/btBuy"
         app:layout_constraintTop_toTopOf="@+id/tvName" />
 
     <Button

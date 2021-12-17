@@ -11,6 +11,10 @@ import com.acasema.listadelacompra.service.FirebaseAuthService
 import com.acasema.listadelacompra.service.FirebaseFirestoreService
 import kotlinx.coroutines.launch
 
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de ViewModel.
+ */
 class ListViewViewModel : ViewModel() {
     private val listLiveData: MutableLiveData<List<Element>> = MutableLiveData()
     private val emailEditing: MutableLiveData<String> = MutableLiveData()
@@ -27,7 +31,7 @@ class ListViewViewModel : ViewModel() {
     fun updateList(listName: String) {
         if (!isOnline) {
             viewModelScope.launch {
-                listLiveData.postValue(RepositoryElement.getIsBought(listName, false))
+                listLiveData.postValue(RepositoryElement.get(listName))
             }
         } else {
             EditingDataDocRe(listName)

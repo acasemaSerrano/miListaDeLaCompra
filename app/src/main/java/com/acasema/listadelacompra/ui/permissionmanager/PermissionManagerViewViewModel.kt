@@ -9,12 +9,16 @@ import com.acasema.listadelacompra.data.model.ShopingList
 import com.acasema.listadelacompra.service.FirebaseAuthService
 import com.acasema.listadelacompra.service.FirebaseFirestoreService
 
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de ViewModel.
+ */
 class PermissionManagerViewViewModel : ViewModel() {
 
-    private val listLiveData: MutableLiveData<List<Permissions>> = MutableLiveData()
+    private val listLiveData: MutableLiveData<MutableList<Permissions>> = MutableLiveData()
     private val email: MutableLiveData<String?> = MutableLiveData()
 
-    fun getListLiveData(): LiveData<List<Permissions>> {
+    fun getListLiveData(): LiveData<MutableList<Permissions>> {
         return listLiveData
     }
     fun getEmail(): LiveData<String?> {
@@ -61,4 +65,9 @@ class PermissionManagerViewViewModel : ViewModel() {
     fun getOwner(): String {
         return FirebaseAuthService().getUser().email!!
     }
+
+    fun usersDelete(shopingList: String, usersDelete: List<String>) {
+        FirebaseFirestoreService().setTakeOutPermissions(shopingList, usersDelete)
+    }
+
 }

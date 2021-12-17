@@ -9,13 +9,16 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.acasema.listadelacompra.R
-import com.acasema.listadelacompra.adapter.AdapterListHistory
+import com.acasema.listadelacompra.ui.adapter.AdapterListHistory
 import com.acasema.listadelacompra.databinding.FragmentRecyclerviewBasicBinding
 import com.acasema.listadelacompra.ui.controller.ActionBarController
 import com.acasema.listadelacompra.ui.controller.FabController
 import com.acasema.listadelacompra.ui.main.MainActivity
 import kotlinx.coroutines.launch
-
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de fragment: muestra el historial
+ */
 class ListHistoryFragment : Fragment() {
 
     lateinit var adapter: AdapterListHistory
@@ -40,10 +43,7 @@ class ListHistoryFragment : Fragment() {
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
             viewModel = ViewModelProvider(this)[ListHistoryViewModel::class.java]
-
-
             _binding = FragmentRecyclerviewBasicBinding.inflate(inflater, container, false)
-
             return binding.root
         }
 
@@ -53,18 +53,30 @@ class ListHistoryFragment : Fragment() {
         listName = arguments?.getString(getString(R.string.KEY_BUNDLE_LISTNAME))!!
         val isOnline = arguments?.getBoolean(getString(R.string.KEY_BUNDLE_ONLINE))!!
 
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.recyclerView.layoutManager = layoutManager
-
-        adapter = AdapterListHistory(requireContext())
-        binding.recyclerView.adapter = adapter
-
-        viewModel.getListLiveData().observe(viewLifecycleOwner, {adapter.setList(it)})
+        initAdapter()
+        setObserves()
 
         lifecycleScope.launch {
             viewModel.updateList(listName, isOnline)
         }
 
+    }
+
+    private fun initAdapter() {
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.layoutManager = layoutManager
+        adapter = AdapterListHistory(requireContext())
+        binding.recyclerView.adapter = adapter
+    }
+
+    private fun setObserves() {
+        viewModel.getListLiveData().observe(viewLifecycleOwner, {
+            if(it.size == 0)
+                binding.ivNotData.visibility = View.VISIBLE
+            else
+                binding.ivNotData.visibility = View.GONE
+            adapter.setList(it)
+        })
     }
     //endregion
 

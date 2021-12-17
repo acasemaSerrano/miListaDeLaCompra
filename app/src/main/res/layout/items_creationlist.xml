@@ -23,14 +23,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:hint="@string/itemscreationlist_amount"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="@+id/etName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/swBought"
         app:layout_constraintStart_toEndOf="@+id/etName"
         app:layout_constraintTop_toTopOf="@+id/etName"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Switch
+        android:id="@+id/swBought"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/swBought"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/etName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etName" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,10 @@ import com.acasema.listadelacompra.service.FirebaseAuthService
 import com.acasema.listadelacompra.service.FirebaseFirestoreService
 import kotlinx.coroutines.launch
 
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de ViewModel.
+ */
 class SignInViewModel: ViewModel() {
 
     private val completeCreateAuthLiveData: MutableLiveData<Boolean?> = MutableLiveData()

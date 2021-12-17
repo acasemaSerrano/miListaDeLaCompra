@@ -12,7 +12,10 @@ import android.net.Uri
 import com.acasema.listadelacompra.ui.controller.FabController
 import com.acasema.listadelacompra.ui.main.MainActivity
 
-
+/**
+ * autor: acasema (alfonso)
+ *  clase para mostrar el acerca de mi
+ */
 class AboutFragment : Fragment() {
 
     private val uri: Uri = Uri.parse("https://github.com/acasemaSerrano")

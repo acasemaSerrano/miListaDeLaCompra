@@ -9,6 +9,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.acasema.listadelacompra.service.FirebaseAuthService
 import com.acasema.listadelacompra.service.FirebaseFirestoreService
 
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de ViewModel.
+ */
 class LoginViewModel : ViewModel() {
 
     private val completeInitAuthLiveData: MutableLiveData<Boolean?> = MutableLiveData()

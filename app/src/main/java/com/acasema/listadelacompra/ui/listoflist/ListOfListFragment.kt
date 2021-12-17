@@ -10,13 +10,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.acasema.listadelacompra.R
-import com.acasema.listadelacompra.adapter.AdapterList
+import com.acasema.listadelacompra.ui.adapter.AdapterList
 import com.acasema.listadelacompra.databinding.FragmentRecyclerviewBasicBinding
 import com.acasema.listadelacompra.ui.main.MainActivity
 import com.acasema.listadelacompra.ui.controller.FabController
 import com.acasema.listadelacompra.ui.controller.NavHeaderController
 import kotlinx.coroutines.launch
-
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de fragment: una colección de lista
+ */
 class ListOfListFragment : Fragment() {
 
     lateinit var adapter: AdapterList
@@ -45,9 +48,7 @@ class ListOfListFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         listOfListViewModel = ViewModelProvider(this)[ListOfListViewModel::class.java]
-
         _binding = FragmentRecyclerviewBasicBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -55,18 +56,30 @@ class ListOfListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initAdapter()
+        setObserves()
+
+        lifecycleScope.launch {
+            listOfListViewModel.updateList()
+        }
+    }
+
+    private fun initAdapter() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.layoutManager = layoutManager
 
         adapter = AdapterList(requireContext())
         binding.recyclerView.adapter = adapter
+    }
 
-        listOfListViewModel.getListLiveData().observe(viewLifecycleOwner, {adapter.setList(it)})
-
-        lifecycleScope.launch {
-            listOfListViewModel.updateList()
-
-        }
+    private fun setObserves() {
+        listOfListViewModel.getListLiveData().observe(viewLifecycleOwner, {
+            if(it.size == 0)
+                binding.ivNotData.visibility = View.VISIBLE
+            else
+                binding.ivNotData.visibility = View.GONE
+            adapter.setList(it)
+        })
     }
 
     override fun onDestroyView() {

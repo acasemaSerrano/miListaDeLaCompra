@@ -6,6 +6,10 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
+/**
+ * autor: acasema (alfonso)
+ *  clase que interpreta un Barcode y devuelbe una descripcion
+ */
 class BarcodeInterpreterService {
     companion object {
 
@@ -13,9 +17,6 @@ class BarcodeInterpreterService {
         private const val FILTROFINAL = "</td></tr>"
 
         private fun convert(url: String): String {
-
-
-
             val u: URL
             var input: BufferedInputStream? = null
             return try {
@@ -52,7 +53,6 @@ class BarcodeInterpreterService {
                 }
                 line = reader.readLine()
             }
-
             return respuesta
         }
 

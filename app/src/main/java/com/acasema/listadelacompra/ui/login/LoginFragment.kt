@@ -25,7 +25,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 
-
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de fragment: sirve para iniciar sesión
+ */
 class LoginFragment : Fragment() {
 
     lateinit var fabController: FabController

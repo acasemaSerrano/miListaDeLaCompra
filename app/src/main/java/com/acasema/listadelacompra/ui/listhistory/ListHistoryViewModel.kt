@@ -7,6 +7,10 @@ import com.acasema.listadelacompra.data.model.Element
 import com.acasema.listadelacompra.data.repository.RepositoryElement
 import com.acasema.listadelacompra.service.FirebaseFirestoreService
 
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de ViewModel.
+ */
 class ListHistoryViewModel : ViewModel() {
 
     private val listLiveData: MutableLiveData<List<Element>> = MutableLiveData()

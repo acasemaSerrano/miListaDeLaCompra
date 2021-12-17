@@ -4,37 +4,29 @@ import com.acasema.listadelacompra.data.AppDatabase
 import com.acasema.listadelacompra.data.model.Element
 import com.acasema.listadelacompra.data.model.ShopingList
 
+/**
+ * autor: acasema (alfonso)
+ * clase para manejar el dao de ShopingList
+ */
 class RepositoyShopingList {
     companion object{
-
         private var shopingListDao = AppDatabase.getInstance().ShopingListDao()
 
-        suspend fun get(): List<ShopingList> {
-
-           //init()
-
+        fun get(): List<ShopingList> {
             return shopingListDao.getAll()
         }
 
-        suspend fun add(shopingList:ShopingList){
+        fun add(shopingList:ShopingList){
             shopingListDao.insert(shopingList)
         }
 
-
-        private suspend fun init() {
-            val shopingList = ShopingList("mercadona")
-            shopingList.online = false
-            add(shopingList)
-
-            val elements: List<Element> =
-                listOf(
-                    Element("huevos", "12", false,null, shopingList.name),
-                    Element("bananas", "12", false, null, shopingList.name)
-                )
-            RepositoryElement.addAll(elements)
+        fun isExists(shopingList: ShopingList): Boolean {
+            return shopingListDao.getCount(shopingList.name) == 1
         }
 
-
+        fun deleted(shopingList: ShopingList) {
+            shopingListDao.delete(shopingList)
+        }
 
     }
 }

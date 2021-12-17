@@ -4,6 +4,10 @@ import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * autor: acasema (alfonso)
+ * clase model de Element
+ */
 @Entity
 data class Element(
     @PrimaryKey(autoGenerate = false) var name:String,

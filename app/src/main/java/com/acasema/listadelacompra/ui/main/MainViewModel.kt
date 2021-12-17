@@ -23,6 +23,10 @@ import kotlinx.coroutines.withContext
 
 import java.net.URL
 
+/**
+ * autor: acasema (alfonso)
+ *  clase derivada de ViewModel.
+ */
 class MainViewModel : ViewModel() {
 
     private val emailLiveData: MutableLiveData<String> = MutableLiveData()
